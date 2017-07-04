@@ -36,7 +36,7 @@
   } \
   ++ty;
 
-#define MENU_GOTO(new_menu) {  lcd_click_now=false;  lcd.clear();  num_menu_items=screen_position=menu_position=menu_position_sum=0;  current_menu=new_menu; return;  }
+#define MENU_GOTO(new_menu) {  lcd_click_now=false;  lcd.clear();  num_menu_items=screen_position=menu_position=menu_position_sum=0;  current_menu=new_menu;  (*current_menu)();  return;  }
 
 #define MENU_SUBMENU(menu_label,menu_method) \
     MENU_ITEM_START(menu_label) \
@@ -130,6 +130,7 @@ void LCD_update() {
   LCD_read();
 
   if(millis() >= lcd_draw_delay ) {
+    Serial.println("* LCD");
     lcd_draw_delay = millis() + LCD_DRAW_DELAY;
 
     (*current_menu)();
@@ -190,7 +191,7 @@ void LCD_print_action() {
   if(mode==1) {
     LCD_print_time(countDownTimer/1000 - seconds);
     lcd.print(" countdown");
-  } else if(mode==2) {
+  } /*else if(mode==2) {
     LCD_print_time(animationTimer/1000 - seconds);
     switch(animation) {
       case 0:  lcd.print(" a1");  break;
@@ -198,6 +199,7 @@ void LCD_print_action() {
       case 2:  lcd.print(" a3");  break;
     }
   }
+  */
 }
 
 
@@ -222,7 +224,7 @@ void LCD_main_menu() {
 #if MAKELANGELO_HARDWARE_VERSION  == 5
       MENU_ACTION("Find home",LCD_find_home);
 #endif
-      MENU_ACTION("This is home",LCD_this_is_home);
+      MENU_ACTION("Find home",LCD_find_home);
       MENU_ACTION("Go home",LCD_go_home);
       if(sd_inserted) {
         MENU_SUBMENU("Start from file...",LCD_start_menu);
@@ -264,12 +266,6 @@ void LCD_enable_motors() {
 
 void LCD_find_home() {
   robot_find_home();
-  MENU_GOTO(LCD_main_menu);
-}
-
-
-void LCD_this_is_home() {
-  robot_position(0,0,0, 0,0,0);
   MENU_GOTO(LCD_main_menu);
 }
 

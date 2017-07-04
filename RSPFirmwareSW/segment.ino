@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 // Stewart Platform v2 - Supports RUMBA 6-axis motor shield
-// dan@marginallycelver.com 2013-09-20
+// dan@marginallyclever.com 2013-09-20
 //------------------------------------------------------------------------------
 // Copyright at end of file.
 // please see http://www.github.com/MarginallyClever/RotaryStewartPlatform2 for more information.

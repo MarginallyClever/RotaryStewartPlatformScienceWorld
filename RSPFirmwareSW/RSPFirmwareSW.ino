@@ -32,6 +32,15 @@ char mode_abs = 1; // absolute mode?
 
 // misc
 long robot_uid = 0;
+const int displayOutputPin = 20;  // pin 10/SDA is located on the EXP3 header of the RUMBA board
+
+
+#define MAX_ANIMATIONS 3
+long countDownTimer = 90000;  //90*1000;  // ms
+long countDownStart;
+int mode=0;
+int animation=MAX_ANIMATIONS-1;
+
 
 //------------------------------------------------------------------------------
 // METHODS
@@ -130,6 +139,8 @@ void sayVersionNumber() {
 void setup() {
   loadConfig();
 
+  pinMode(displayOutputPin,OUTPUT);
+
   Serial.begin(BAUD);  // open coms
 
   motor_setup();
@@ -147,49 +158,44 @@ void setup() {
 
 
 
-#define MAX_ANIMATIONS 3
-long countDownTimer = 5000;  //5*60*1000;  // ms
-long animationTimer = 5000;  //ms
-long countDownStart;
-int mode=0;
-int animation=MAX_ANIMATIONS-1;
-
 /**
  * After setup() this machine will repeat loop() forever.
  */
 void loop() {
-#ifdef TEST_STEPPERS
-  int i=0;
+  #ifdef TEST_STEPPERS
+    for(int i=0; i<6; ++i) {
+      Serial.print("motor ");
+      Serial.println(i);
+      test_motor(i);
+    }
+  #endif
 
-  for(i=0;i<6;++i) {
-    Serial.print("motor ");
-    Serial.println(i);
-    test_motor(i);
-  }
-#endif
-#ifdef TEST_SWITCHES
-  test_switches();
-#endif
-
-  parser_listen();
+  #ifdef TEST_SWITCHES
+    test_switches();
+  #endif
   
-  SD_check();
-#ifdef HAS_LCD
-  LCD_update();
-#endif
-
-#ifdef HAS_SD
-  if(sd_inserted==false) {
-    mode=0;
-  } else {
+    parser_listen();  
+    SD_check();
+    
+  #ifdef HAS_LCD
+    LCD_update();
+  #endif
+  
+  #ifdef HAS_SD
+    if(sd_inserted==false) {
+      mode=0;
+    }
+  else {
     switch(mode) {
-      case 0:
+      case 0: // mode 0 reset countdown
         // set countdown
         countDownStart=millis();
+        digitalWrite(displayOutputPin,LOW);
         mode=1;
       case 1:
-        // count down 5 minutes
+        // count down 90 seconds
         if(millis() - countDownStart >= countDownTimer ) {
+          digitalWrite(displayOutputPin,HIGH);
           // launch next animation
           switch(animation) {
             case 0:  earthquakeVertical();  break;
@@ -200,7 +206,7 @@ void loop() {
         }
         break;
       case 2:
-        // when recording is done, restart the 5min countdown timer.
+        // when recording is done, restart the countdown timer.
         if(sd_printing_now == false) {
           animation = ( animation + 1 ) % MAX_ANIMATIONS;
           mode=0;
@@ -208,13 +214,13 @@ void loop() {
         break;
     }
   }
-#endif
+  #endif
 }
 
 
-void earthquakeVertical  () {  SD_StartPrintingFile("waveZ.ngc");  }
-void earthquakeHorizontal() {  SD_StartPrintingFile("waveX.ngc");  }
-void earthquakeWave      () {  SD_StartPrintingFile("waveU.ngc");  }
+void earthquakeVertical  () {  SD_StartPrintingFile("waveU.ngc");  }
+void earthquakeHorizontal() {  SD_StartPrintingFile("waveV.ngc");  }
+void earthquakeWave      () {  SD_StartPrintingFile("waveZ.ngc");  }
 
 
 /**

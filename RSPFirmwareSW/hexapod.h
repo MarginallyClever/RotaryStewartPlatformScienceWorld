@@ -20,7 +20,7 @@
 
 // measurements based on computer model of robot
 #define NUM_TOOLS            (6)
-#define BICEP_LENGTH         (11.5f)
+#define BICEP_LENGTH         (6.03f) // changed from 11.5 2017-06-19 J. Craver
 #define FOREARM_LENGTH       (36.83f)
 
 // individually correct each switch for best calibration.
@@ -39,7 +39,7 @@
 #define T2W_Z                ( 3.4f)
 // base center to shoulder hole (relative): X8.093 Y+/-2.15 Z7.831
 // in Robot Overlord this is the "BASE_TO_SHOULDER_" value
-#define B2S_X                (20.534f)
+#define B2S_X                (22.534f)  // was (20.534f) changed 2017-06-19 J. Craver
 #define B2S_Y                ( 5.45f )
 #define B2S_Z                ( 4.925f)
 
