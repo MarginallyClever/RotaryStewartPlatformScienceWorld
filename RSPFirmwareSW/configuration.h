@@ -33,7 +33,7 @@
 #define MICROSTEP_PER_DEGREE (MICROSTEPS_PER_TURN/360.0)
 
 // speed and acceleration
-#define MAX_FEEDRATE         (9000.0)  // depends on timer interrupt & hardware
+#define MAX_FEEDRATE         (3000.0)  // depends on timer interrupt & hardware
 #define MIN_FEEDRATE         (1.0)
 #define DEFAULT_FEEDRATE     (3000.0)
 #define DEFAULT_ACCELERATION (1500.0)

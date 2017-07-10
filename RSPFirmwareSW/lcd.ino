@@ -13,10 +13,8 @@
 #include <LiquidCrystal.h>
 #include "sdcard.h"
 
-
 #define LCD_DRAW_DELAY    (150)
 #define LCD_TURN_PER_MENU (5)
-
 
 // Convenience macros that make it easier to generate menus
 
@@ -173,7 +171,7 @@ void LCD_status_menu() {
     //lcd.setCursor( 0, 1);  lcd.print('Z');  LCD_print_float(robot.ee.pos.z);
     //lcd.setCursor(10, 1);  lcd.print('F');  LCD_print_float(feed_rate);
     lcd.setCursor( 0, 0);  lcd.print(F("Stewart Platform"));
-    //lcd.setCursor( 0, 1);  lcd.print(F("MarginallyClever.com"));
+    lcd.setCursor( 0, 1);  lcd.print(F("File    ")); lcd.print(sd_print_file.name());
     lcd.setCursor( 0, 2);  lcd.print(F("Speed ")); LCD_print_long(speed_adjust);  lcd.print(F("% "));
     lcd.setCursor( 0, 3);  LCD_print_action();
     if(sd_printing_now==true/* && sd_printing_paused==false*/) {
@@ -277,7 +275,9 @@ void LCD_go_home() {
 
 
 void LCD_start_menu() {
-  if(!sd_inserted) MENU_GOTO(LCD_main_menu);
+  if(!sd_inserted) {
+    MENU_GOTO(LCD_main_menu);
+  }
 
   MENU_START
     MENU_SUBMENU("Back",LCD_main_menu);

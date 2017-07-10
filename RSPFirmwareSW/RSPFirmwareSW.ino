@@ -1,5 +1,7 @@
 //------------------------------------------------------------------------------
-// Stewart Platform Science World - Supports RUMBA 6-axis motor shield
+// RSPFirmwareSW.ino
+// Rotary Stewart Platform Firmware Science World
+//  - Supports RUMBA 6-axis motor shield
 // dan@marginallycelver.com 2017-04-07
 // First time you run the robot send R70 and R71 to initialize the motor angles.
 //------------------------------------------------------------------------------
@@ -32,14 +34,14 @@ char mode_abs = 1; // absolute mode?
 
 // misc
 long robot_uid = 0;
-const int displayOutputPin = 20;  // pin 10/SDA is located on the EXP3 header of the RUMBA board
+const int displayOutputPin = 20;  // high/low signal to trigger Science World's LED countdown displays
 
 
 #define MAX_ANIMATIONS 3
-long countDownTimer = 90000;  //90*1000;  // ms
-long countDownStart;
+unsigned long countDownTimer = 5000;  //5*1000;  // ms
+unsigned long countDownStart;
 int mode=0;
-int animation=MAX_ANIMATIONS-1;
+int animation=0;
 
 
 //------------------------------------------------------------------------------
