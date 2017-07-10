@@ -128,9 +128,10 @@ void parser_processCommand() {
   case  1: {  // move in a line
       acceleration = min(max(parseNumber('A',acceleration),1),2000);
       Vector3 offset=robot_get_end_plus_offset();
-      robot_line( parseNumber('X',(mode_abs?offset.x:0)) + (mode_abs?0:offset.x),
-                  parseNumber('Y',(mode_abs?offset.y:0)) + (mode_abs?0:offset.y),
-                  parseNumber('Z',(mode_abs?offset.z:0)) + (mode_abs?0:offset.z),
+      //robot_line(float newx,float newy,float newz,float newu,float newv,float neww,float new_feed_rate)
+      robot_line( parseNumber('X',(mode_abs ? offset.x : 0)) + (mode_abs ? 0 : offset.x),
+                  parseNumber('Y',(mode_abs ? offset.y : 0)) + (mode_abs ? 0 : offset.y),
+                  parseNumber('Z',(mode_abs ? offset.z : 0)) + (mode_abs ? 0 : offset.z),
                   parseNumber('U',(mode_abs?robot.ee.r:0)) + (mode_abs?0:robot.ee.r),
                   parseNumber('V',(mode_abs?robot.ee.p:0)) + (mode_abs?0:robot.ee.p),
                   parseNumber('W',(mode_abs?robot.ee.y:0)) + (mode_abs?0:robot.ee.y),
@@ -164,8 +165,8 @@ void parser_processCommand() {
   case 59: {  // 54-59 tool offsets
     int tool_id=cmd-54;
     robot_tool_offset(tool_id,parseNumber('X',robot.tool_offset[tool_id].x),
-                                parseNumber('Y',robot.tool_offset[tool_id].y),
-                                parseNumber('Z',robot.tool_offset[tool_id].z));
+                              parseNumber('Y',robot.tool_offset[tool_id].y),
+                              parseNumber('Z',robot.tool_offset[tool_id].z));
     break;
   }
   case 90:  mode_abs=1;  break;  // absolute mode

@@ -107,7 +107,7 @@ void SD_check() {
       }
     }
 
-    if(sd_print_file.peek() == -1) {
+    if(sd_print_file.peek() == -1) { // if no more data is available in the file
       sd_print_file.close();
       sd_printing_now=false;
     }
