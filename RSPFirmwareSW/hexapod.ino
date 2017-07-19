@@ -469,19 +469,14 @@ void robot_find_home() {
         --robot.steps_to_zero[i];
         hexapod_onestep(i,1);
         keepGoing=1;
-        Serial.print(i,DEC);
-      } else {
-        Serial.print(' ');
       }
     }
-    Serial.print('\n');
     pause(250);
   } while(keepGoing>0);
     
   // recalculate XYZ positions
   hexapod_setup();
   hexapod_loadHomeAngles();
-  robot_where();
 }
 
 

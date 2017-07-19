@@ -28,7 +28,7 @@
 
 // Stepper motors
 #define STEPS_PER_TURN       (200.0)  // depends on your stepper motor.  most are 200.
-#define MICROSTEPS           (256.0)
+#define MICROSTEPS           (128.0)
 #define MICROSTEPS_PER_TURN  (STEPS_PER_TURN*MICROSTEPS)
 #define MICROSTEP_PER_DEGREE (MICROSTEPS_PER_TURN/360.0)
 
