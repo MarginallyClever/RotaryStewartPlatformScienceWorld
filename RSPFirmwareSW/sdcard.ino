@@ -108,6 +108,16 @@ void SD_check() {
     }
 
     if(sd_print_file.peek() == -1) { // if no more data is available in the file
+      if(sofar>0) {
+        serialBuffer[sofar]=0;
+        // print for our benefit
+        Serial.println(serialBuffer);
+        // process command
+        parser_processCommand();
+        // reset buffer for next line
+        parser_ready();
+      }
+      sd_percent_complete = 100;
       sd_print_file.close();
       sd_printing_now=false;
     }
