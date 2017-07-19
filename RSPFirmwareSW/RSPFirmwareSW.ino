@@ -142,6 +142,7 @@ void setup() {
   loadConfig();
 
   pinMode(displayOutputPin,OUTPUT);
+  pinMode(ESTOP_PIN,INPUT);
 
   Serial.begin(BAUD);  // open coms
 
@@ -178,6 +179,7 @@ void loop() {
   
     parser_listen();  
     SD_check();
+    estop_check();
     
   #ifdef HAS_LCD
     LCD_update();

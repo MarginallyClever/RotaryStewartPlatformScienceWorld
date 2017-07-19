@@ -570,6 +570,26 @@ void robot_where() {
 } 
 
 
+void robot_estop() {
+  Serial.println(F("** EMERGENCY STOP **"));
+  Serial.println(F("machine will reject all instructions until reset."));
+  
+  // disable global interrupts, including timer for steps
+  noInterrupts();
+  // empty segment buffer (not required?)
+  current_segment = last_segment;
+  
+  // stop accepting new commands.
+  while(true) delay(100);
+}
+
+
+void estop_check() {
+  if(digitalRead(ESTOP_PIN)==HIGH) {
+    robot_estop();    
+  }
+}
+
 /**
 * This file is part of Stewart Platform v2.
 *
