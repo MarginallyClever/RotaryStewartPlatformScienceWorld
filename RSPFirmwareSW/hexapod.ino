@@ -481,6 +481,7 @@ void robot_find_home() {
   // recalculate XYZ positions
   hexapod_setup();
   hexapod_loadHomeAngles();
+  robot_where();
 }
 
 

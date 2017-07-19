@@ -128,7 +128,6 @@ void LCD_update() {
   LCD_read();
 
   if(millis() >= lcd_draw_delay ) {
-    Serial.println("* LCD");
     lcd_draw_delay = millis() + LCD_DRAW_DELAY;
 
     (*current_menu)();
